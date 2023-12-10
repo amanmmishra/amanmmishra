@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment {
+    parameters {
       choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'])
       booleanParam(name: 'status', defaultVlue: true, description: 'boolean expression')
     }
@@ -23,8 +23,8 @@ pipeline {
         stage("deploy") {
             steps {
               echo 'deploying the application...'
-              echo "Version: ${VERSION}"
-              echo "status: ${status}"
+              echo "Version: ${params.VERSION}"
+              echo "status: ${params.status}"
             }
         }
     }   
