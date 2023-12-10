@@ -18,6 +18,8 @@ pipeline {
           }
             steps {
               echo 'testing the application...'
+              echo "BranchName: ${env.BRANCH_NAME}"
+              echo "Status: ${params.status}"  
             }
         }
         stage("deploy") {
