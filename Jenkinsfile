@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+      choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'])
+      booleanParam(name: 'status', defaultVlue: true, description: 'boolean expression')
+    }
     stages {
         stage("build") {
             steps {
@@ -9,7 +13,7 @@ pipeline {
         stage("test") {
           when {
             expression {
-              env.BRANCH_NAME == 'prod'
+              env.BRANCH_NAME == 'dev' && params.status
             }
           }
             steps {
@@ -19,6 +23,8 @@ pipeline {
         stage("deploy") {
             steps {
               echo 'deploying the application...'
+              echo "Version: ${VERSION}"
+              echo "status: ${status}"
             }
         }
     }   
