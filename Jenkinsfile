@@ -13,7 +13,7 @@ pipeline {
         stage("test") {
           when {
             expression {
-              env.BRANCH_NAME == 'dev' && params.status
+              env.BRANCH_NAME == 'test' && params.status
             }
           }
             steps {
