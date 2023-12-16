@@ -28,4 +28,13 @@ pipeline {
             }
         }
     }
+    post {
+      success{
+        echo 'Build successfully executed...'
+      }
+      failure{
+        echo 'Build failed. Please check the logs for further information....'
+      }
+      
+    }
     }   
