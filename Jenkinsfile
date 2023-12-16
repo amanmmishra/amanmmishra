@@ -31,6 +31,7 @@ pipeline {
               echo "status: ${status}"
             }
         }
+    }
         post {
           success{
             script {
@@ -45,5 +46,4 @@ pipeline {
             }
             }
           }
-        }
     }   
