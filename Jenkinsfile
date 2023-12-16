@@ -23,7 +23,7 @@ pipeline {
         stage("deploy") {
             steps {
               echo 'deploying the application...'
-              echo "Version: ${VERSION}"
+              echo "Version: ${VERSION} ${BRANCH_NAME}"
               echo "status: ${status}"
             }
         }
