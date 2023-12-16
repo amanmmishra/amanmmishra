@@ -21,6 +21,8 @@ pipeline {
             }
           }
             steps {
+              echo "Email: ${EMAIL_ADDRESS}"
+              echo "Curr Date: ${CURRENT_DATE}"
               echo 'testing the application...'
             }
         }
@@ -32,18 +34,4 @@ pipeline {
             }
         }
     }
-        post {
-          success{
-            script {
-              emailext attachLog: false,
-              to:"${EMAIL_ADDRESS}"
-              subject: "build excuted successfully at ${CURRENT_DATE}"
-              body: """<html>
-                           <body>
-                               <p>"build excuted successfully at ${CURRENT_DATE}"</p>
-                               </body>
-                               </html>"""
-            }
-            }
-          }
     }   
