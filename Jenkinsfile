@@ -13,6 +13,7 @@ pipeline {
                 echo 'building the app'
                 echo "BR_Name: ${BUILD_VERSION}"
                 echo "Status: ${YN}"
+                echo "Color: ${COLOR}"
             }
         }
         stage ("testing") {
@@ -20,6 +21,7 @@ pipeline {
                 echo 'testing the app'
                 echo "BR_Name: ${BUILD_VERSION}"
                 echo "Status: ${YN}"
+                echo "Color: ${COLOR}"
             }
 
         }
@@ -28,6 +30,7 @@ pipeline {
                 echo 'deploying the app'
                 echo "BR_Name: ${BUILD_VERSION}"
                 echo "Status: ${YN}"
+                echo "Color: ${COLOR}"
             }
 
         }
