@@ -11,20 +11,23 @@ pipeline {
         stage ("building") {
             steps {
                 echo 'building the app'
-                echo "BR_Name: ${BUILD_VERSION}, status: ${YN}"
+                echo "BR_Name: ${BUILD_VERSION}"
+                echo "Status: ${YN}"
             }
         }
         stage ("testing") {
             steps {
                 echo 'testing the app'
-                echo "BR_Name: ${BUILD_VERSION}, status: ${YN}"
+                echo "BR_Name: ${BUILD_VERSION}"
+                echo "Status: ${YN}"
             }
 
         }
         stage ("deploying") {
             steps {
                 echo 'deploying the app'
-                echo "BR_Name: ${BUILD_VERSION}, status: ${YN}"
+                echo "BR_Name: ${BUILD_VERSION}"
+                echo "Status: ${YN}"
             }
 
         }
