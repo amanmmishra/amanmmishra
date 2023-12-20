@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        String (name: 'BR_Name', defaultValue: 'fun', description: 'string variable')
+        string (name: 'BR_Name', defaultValue: 'fun', description: 'string variable')
     }
     stages {
         stage ("building") {
