@@ -7,6 +7,11 @@ pipeline {
             }
         }
         stage ("testing") {
+            when {
+                expression {
+                    BRANCH_NAME = 'qa'
+                }
+            }
             steps {
                 echo 'testing the app'
             }
