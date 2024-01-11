@@ -1,3 +1,4 @@
+def gv
 pipeline {
     agent any
     environment {
@@ -8,29 +9,29 @@ pipeline {
         booleanParam(name: 'YN', defaultValue: true, description: 'boolean expression')
     }
     stages {
+        stage ("begin"){
+            gv = load "script.groovy"
+        }
         stage ("building") {
             steps {
-                echo 'building the app'
-                echo "BR_Name: ${BUILD_VERSION}"
-                echo "Status: ${YN}"
-                echo "Color: ${COLOR}"
+                script {
+                    gv.building()
+                }
             }
         }
         stage ("testing") {
             steps {
-                echo 'testing the app'
-                echo "BR_Name: ${BUILD_VERSION}"
-                echo "Status: ${YN}"
-                echo "Color: ${COLOR}"
+                script {
+                    gv.testing()
+                }
             }
 
         }
         stage ("deploying") {
             steps {
-                echo 'deploying the app'
-                echo "BR_Name: ${BUILD_VERSION}"
-                echo "Status: ${YN}"
-                echo "Color: ${COLOR}"
+                script {
+                    gv.deploying()
+                }
             }
 
         }
