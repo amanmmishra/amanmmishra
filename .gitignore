@@ -1,0 +1,21 @@
+# Default ignored files
+.idea
+target
+test-output
+
+# Ignore Mac DS_Store files
+.DS_Store
+**/.DS_Store
+
+#Ignore .settings files
+/.settings/*
+.classpath
+.project
+/bin/*
+
+#Ignore report files except folder
+report/*
+!report/.gitkeep
+.classpath
+.project
+

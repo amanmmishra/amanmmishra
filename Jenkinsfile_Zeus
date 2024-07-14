@@ -1,0 +1,81 @@
+pipeline {
+    agent {
+        label 'automation-suit'
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: "40"))
+    }
+    environment{
+        TEST_FOLDER_NAME = "test-output"
+        ZIP_FILE_NAME = "Spark.zip"
+        EMAIL_ADDRESS = "pooja.pathak@simpplr.com,aishma.gupta@simpplr.com,meenu.bala@simpplr.com,amit.gupta@simpplr.com,bharat.madaan@simpplr.com,lakshmi.joshi@simpplr.com,aman.mishra@simpplr.com,saran.kumar@simpplr.com,urushi.rajput@simpplr.com"
+        CURRENT_DATE = sh (script: 'date +"%Y-%m-%d"', returnStdout: true).trim()
+        PLATFORM ="Zeus"
+        FUNCTION="Platform Services"
+    }
+    stages{
+        stage('Run mvn clean') {
+            steps {
+                script{
+                    try {
+                        sh 'mvn clean test verify -Dcucumber.filter.tags="@zeus" -Drunner=Runner -DtestEnv=zeus_test'
+                        sh 'ls -lthr'
+                    } catch (Exception e) {
+                        echo "Ignoring test failures"
+                    }
+                }
+
+            }
+        }
+        stage('Zip test folder') {
+            steps {
+                script{
+                    sh "zip -r Spark.zip ./test-output"
+                }
+            }
+        }
+    }
+    //Post section will always run at the end of pipeline execution
+    post {
+        always {
+            archiveArtifacts artifacts: 'Spark.zip', allowEmptyArchive: true
+        }
+        success {
+            script  {
+                sh "java -jar Extract_Catagory.jar"
+            }
+            script {
+
+                def message = "Please find the attachment Test Results Report for ${FUNCTION} - ${PLATFORM} - ${CURRENT_DATE} "
+
+
+                def htmlContent = readFile 'extracted.html'
+                emailext attachLog: false,
+                attachmentsPattern: "${ZIP_FILE_NAME}",
+                to: "${EMAIL_ADDRESS}",
+                subject: "${FUNCTION}- Automation Suite Test Results for ${PLATFORM} - ${CURRENT_DATE}",
+                body: """<html>
+                <body>
+                <p>${message}</p>
+                ${htmlContent}
+                <p>Thanks,<br>
+                ${FUNCTION} Team</p>
+                </body>
+                </html>""",
+                mimeType: 'text/html'
+            }
+        }
+        failure{
+            script {
+                message = "Build has been failed"
+                emailext attachLog: true,
+                to: "${EMAIL_ADDRESS}",
+                subject: "Failed Build: ${currentBuild.fullDisplayName}",
+                body: """ ${message}"""
+            }
+        }
+        cleanup{
+            cleanWs()	//This will cleanup workspace
+        }
+    }
+}
